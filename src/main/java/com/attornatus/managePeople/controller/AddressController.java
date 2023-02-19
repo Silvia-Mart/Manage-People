@@ -44,7 +44,7 @@ public class AddressController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity editAddressPerson(@PathVariable("id")long id) {
+    public ResponseEntity deleteAddressPerson(@PathVariable("id")long id) {
         addressService.deleteAddress(id);
         return ResponseEntity.status(HttpStatus.OK).body(id);
     }

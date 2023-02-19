@@ -26,7 +26,12 @@ public class AddressService {
         if(optionalPerson.isPresent()){
             Person person = optionalPerson.get();
             address.setPerson(person);
-            return addressRepository.save(address);
+            Address addressMain = addressRepository.findByPersonIdAndIsMainAddress(id, true);
+            if(addressMain==null || address.isMainAddress() == false) {
+                return addressRepository.save(address);
+            }else{
+                throw new EntityException("Existing primary address!");
+            }
         }
 
         throw new EntityException("Id person not found!");
@@ -51,11 +56,16 @@ public class AddressService {
     @Transactional
     public Address editAddressPerson(Long id, Address address,Long idPerson) {
         Optional<Person> optionalPerson = personRepository.findById(idPerson);
+        Optional<Address> optionalAddress = addressRepository.findById(id);
         if(optionalPerson.isPresent()){
-            Person person = optionalPerson.get();
-            address.setId(id);
-            address.setPerson(person);
-            return addressRepository.save(address);
+            if(optionalAddress.isPresent()){
+                Person person = optionalPerson.get();
+                address.setId(id);
+                address.setPerson(person);
+                return addressRepository.save(address);
+            }else{
+                throw new EntityException("Address not found!");
+            }
         }
         throw new EntityException("Person not found!");
     }

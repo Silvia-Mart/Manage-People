@@ -23,8 +23,14 @@ public class PersonService {
 
     @Transactional
     public Person editPersonData(Long id,Person person) {
-        person.setId(id);
-        return personRepository.save(person);
+        Optional<Person> optionalPerson = personRepository.findById(id);
+        if(optionalPerson.isPresent()) {
+            person.setId(id);
+            return personRepository.save(person);
+        }else{
+            throw new EntityException("Id person not found!");
+        }
+
     }
 
     @Transactional
@@ -44,6 +50,13 @@ public class PersonService {
 
     @Transactional
     public void deletePersonById(Long id) {
-        personRepository.deleteById(id);
+        Optional<Person> optionalPerson = personRepository.findById(id);
+        if(optionalPerson.isPresent()) {
+            optionalPerson.get();
+            personRepository.deleteById(id);;
+        }else{
+            throw new EntityException("Id person not found!");
+        }
+
     }
 }
