@@ -1,6 +1,7 @@
 package com.attornatus.managePeople.dto;
 
 import com.attornatus.managePeople.model.Person;
+import com.attornatus.managePeople.validation.Telephone;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -21,6 +22,7 @@ public class PersonDto {
     @NotBlank
     private String email;
 
+    @Telephone
     @NotBlank
     private String telephone;
 

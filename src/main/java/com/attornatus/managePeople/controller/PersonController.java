@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,14 +18,13 @@ public class PersonController {
     PersonService personService;
 
     @PostMapping
-    public ResponseEntity<Person> createPerson(@RequestBody PersonDto personDto) {
+    public ResponseEntity<Person> createPerson(@RequestBody @Valid PersonDto personDto) {
         Person savedPerson = personService.createPerson(personDto.transfer());
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPerson);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Person> editPersonData(@PathVariable("id")long id,
-                                                 @RequestBody PersonDto personUpdated) {
+    public ResponseEntity<Person> editPersonData(@PathVariable("id")long id, @RequestBody @Valid PersonDto personUpdated) {
         Person editData = personService.editPersonData(id,personUpdated.transfer());
         return ResponseEntity.status(HttpStatus.OK).body(editData);
     }

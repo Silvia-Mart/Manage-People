@@ -6,8 +6,10 @@ import com.attornatus.managePeople.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +20,7 @@ public class AddressController {
     AddressService addressService;
 
     @PostMapping
-    public ResponseEntity<Address> createdAddress(@RequestBody AddressDto addressDto) {
+    public ResponseEntity<Address> createdAddress(@RequestBody @Valid AddressDto addressDto) {
         Address savedAddress = addressService.createdAddress(addressDto.transfer(), addressDto.getPersonId());
         return ResponseEntity.status(HttpStatus.CREATED).body(savedAddress);
     }
@@ -37,7 +39,7 @@ public class AddressController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Address> editAddressPerson(@PathVariable("id")long id,
-                                                     @RequestBody  AddressDto addressDto) {
+                                                     @RequestBody @Valid AddressDto addressDto) {
         Address editAddress = addressService.editAddressPerson(id,addressDto.transfer(),addressDto.getPersonId());
         return ResponseEntity.status(HttpStatus.OK).body(editAddress);
     }

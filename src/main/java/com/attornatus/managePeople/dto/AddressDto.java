@@ -1,19 +1,22 @@
 package com.attornatus.managePeople.dto;
 
 import com.attornatus.managePeople.model.Address;
+import com.attornatus.managePeople.validation.CEP;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class AddressDto {
     @NotBlank
     private String publicPlace;
+    @CEP
     @NotBlank
     private String CEP;
     @NotBlank
     private String number;
     @NotBlank
     private String city;
-    @NotBlank
+    @NotNull
     private boolean mainAddress;
 
     private Long personId;
