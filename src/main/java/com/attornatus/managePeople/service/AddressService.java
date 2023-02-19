@@ -1,5 +1,6 @@
 package com.attornatus.managePeople.service;
 
+import com.attornatus.managePeople.exception.EntityException;
 import com.attornatus.managePeople.model.Address;
 import com.attornatus.managePeople.model.Person;
 import com.attornatus.managePeople.repository.AddressRepository;
@@ -28,7 +29,7 @@ public class AddressService {
             return addressRepository.save(address);
         }
 
-        throw new RuntimeException("errro");
+        throw new EntityException("Id person not found!");
     }
 
     @Transactional
@@ -39,7 +40,7 @@ public class AddressService {
             List<Address> personAddress = person.getAddress();
             return personAddress;
         }
-        throw new RuntimeException("errro");
+        throw new EntityException("Id person not found!");
     }
 
     @Transactional
@@ -56,7 +57,7 @@ public class AddressService {
             address.setPerson(person);
             return addressRepository.save(address);
         }
-        throw new RuntimeException("errro");
+        throw new EntityException("Person not found!");
     }
 
     @Transactional

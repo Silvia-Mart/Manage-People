@@ -1,5 +1,6 @@
 package com.attornatus.managePeople.service;
 
+import com.attornatus.managePeople.exception.EntityException;
 import com.attornatus.managePeople.model.Person;
 import com.attornatus.managePeople.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class PersonService {
         if(optionalPerson.isPresent()) {
             return optionalPerson.get();
         }else{
-            throw new RuntimeException("erro aqui!");
+            throw new EntityException("Id person not found!");
         }
     }
 
